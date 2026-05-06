@@ -1,0 +1,26 @@
+{
+  "name": "movilbank",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Prototipo de banca móvil tipo N26 donde el número móvil actúa como cuenta bancaria.",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "test": "node --test test/*.test.mjs"
+  },
+  "dependencies": {
+    "@expo/vector-icons": "^14.0.4",
+    "expo": "~51.0.28",
+    "expo-status-bar": "~1.12.1",
+    "react": "18.2.0",
+    "react-native": "0.74.5"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=18"
+  },
+  "type": "module"
+}

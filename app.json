@@ -1,0 +1,25 @@
+{
+  "expo": {
+    "name": "MóvilBank",
+    "slug": "movilbank",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "backgroundColor": "#07111f"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.movilbank.app"
+    },
+    "android": {
+      "package": "com.movilbank.app"
+    },
+    "web": {
+      "bundler": "metro"
+    }
+  }
+}
