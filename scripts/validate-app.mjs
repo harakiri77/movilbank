@@ -16,7 +16,9 @@ const requiredFiles = [
   'src/data/mockBanking.ts',
   'src/styles/theme.ts',
   'src/types/banking.ts',
-  'src/utils.ts'
+  'src/utils.ts',
+  'preview/index.html',
+  'scripts/serve-preview.mjs'
 ];
 
 const failures = [];
@@ -44,7 +46,13 @@ if (packageJson.scripts?.start === 'expo start') {
 if (packageJson.scripts?.test === 'node scripts/validate-app.mjs') {
   pass('npm test ejecuta la validación de la app');
 } else {
-  fail('package.json debe exponer "test": "node scripts/validate-app.mjs"');
+  fail('package.json debe exponer \"test\": \"node scripts/validate-app.mjs\"');
+}
+
+if (packageJson.scripts?.preview === 'node scripts/serve-preview.mjs') {
+  pass('npm run preview sirve la vista previa estática');
+} else {
+  fail('package.json debe exponer \"preview\": \"node scripts/serve-preview.mjs\"');
 }
 
 if (appJson.expo?.name === 'MovilBank' && appJson.expo?.slug === 'movilbank') {
@@ -57,6 +65,7 @@ const home = file('src/screens/HomeScreen.tsx');
 const balance = file('src/components/BalanceCard.tsx');
 const mock = file('src/data/mockBanking.ts');
 const utils = file('src/utils.ts');
+const preview = file('preview/index.html');
 
 const expectedUiTexts = [
   'Tu móvil es tu cuenta bancaria',
@@ -71,6 +80,12 @@ for (const text of expectedUiTexts) {
     pass(`HomeScreen muestra "${text}"`);
   } else {
     fail(`HomeScreen debe mostrar "${text}"`);
+  }
+
+  if (preview.includes(text)) {
+    pass(`La previsualización muestra "${text}"`);
+  } else {
+    fail(`preview/index.html debe mostrar "${text}"`);
   }
 }
 

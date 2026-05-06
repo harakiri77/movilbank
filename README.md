@@ -19,6 +19,16 @@ npm install
 npm start
 ```
 
+### Previsualización sin instalar dependencias
+
+Si solo quieres revisar la interfaz en el navegador, puedes abrir la vista previa estática incluida:
+
+```bash
+npm run preview
+```
+
+Luego entra a `http://127.0.0.1:4173`. Esta vista reproduce la pantalla principal de MovilBank y no requiere descargar paquetes de npm.
+
 Después de iniciar Expo, escanea el QR con Expo Go o ejecuta la app en un emulador iOS/Android.
 
 ## Scripts
