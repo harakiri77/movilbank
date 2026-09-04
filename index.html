@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAER — Servicio de Anestesia El Rosal</title>
+<meta name="description" content="Centro médico especializado en cirugía plástica y oftalmológica bajo cuidado anestésico controlado, en El Rosal, Caracas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F3F6F4;
+    --surface:#FFFFFF;
+    --surface-alt:#E8EFEB;
+    --surface-raised:#FFFFFF;
+    --ink:#112420;
+    --ink-soft:#4C6059;
+    --ink-faint:#7C918A;
+    --accent:#0E6B58;
+    --accent-strong:#0A4F41;
+    --accent-tint:#DCEEE7;
+    --gold:#AD7B34;
+    --gold-tint:#F3E7D3;
+    --line:#D6E1DC;
+    --line-strong:#B9CAC3;
+    --shadow: 0 1px 2px rgba(17,36,32,0.04), 0 12px 28px -16px rgba(17,36,32,0.18);
+    --danger:#A5432E;
+    --radius-s:6px;
+    --radius-m:12px;
+    --radius-l:22px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0C1614;
+      --surface:#12211D;
+      --surface-alt:#182B25;
+      --surface-raised:#17302A;
+      --ink:#E9F2EE;
+      --ink-soft:#A6BDB4;
+      --ink-faint:#72897F;
+      --accent:#43CFA9;
+      --accent-strong:#7CE3C4;
+      --accent-tint:#183931;
+      --gold:#DBAA63;
+      --gold-tint:#2C2415;
+      --line:#233E37;
+      --line-strong:#2E5148;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 20px 40px -20px rgba(0,0,0,0.6);
+      --danger:#E08066;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0C1614;
+    --surface:#12211D;
+    --surface-alt:#182B25;
+    --surface-raised:#17302A;
+    --ink:#E9F2EE;
+    --ink-soft:#A6BDB4;
+    --ink-faint:#72897F;
+    --accent:#43CFA9;
+    --accent-strong:#7CE3C4;
+    --accent-tint:#183931;
+    --gold:#DBAA63;
+    --gold-tint:#2C2415;
+    --line:#233E37;
+    --line-strong:#2E5148;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 20px 40px -20px rgba(0,0,0,0.6);
+    --danger:#E08066;
+  }
+
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"IBM Plex Sans", -apple-system, "Segoe UI", sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;}
+  h1,h2,h3,h4{
+    font-family:"Newsreader", Georgia, "Times New Roman", serif;
+    font-weight:500;
+    line-height:1.12;
+    margin:0;
+    text-wrap:balance;
+    color:var(--ink);
+    letter-spacing:-0.01em;
+  }
+  p{margin:0;}
+  .mono{
+    font-family:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-feature-settings:"tnum" 1;
+    font-variant-numeric:tabular-nums;
+  }
+  .eyebrow{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--accent);
+    font-weight:500;
+  }
+  .wrap{
+    max-width:1160px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+  @media (max-width:640px){ .wrap{padding:0 20px;} }
+
+  /* skip link */
+  .skip-link{
+    position:absolute; left:-999px; top:0;
+    background:var(--accent); color:#fff; padding:10px 16px;
+    border-radius:0 0 8px 0; z-index:200;
+  }
+  .skip-link:focus{ left:0; }
+
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:2px;
+  }
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky; top:0; z-index:100;
+    background:color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    height:76px;
+  }
+  .brand{
+    display:flex; align-items:center; gap:11px;
+    text-decoration:none;
+  }
+  .brand-mark{ width:34px; height:34px; flex:none; color:var(--accent); }
+  .brand-text{ display:flex; flex-direction:column; line-height:1.05; }
+  .brand-text strong{
+    font-family:"Newsreader", serif; font-size:1.28rem; font-weight:600; letter-spacing:0.01em;
+  }
+  .brand-text span{
+    font-family:"IBM Plex Mono", monospace; font-size:0.62rem; letter-spacing:0.09em;
+    color:var(--ink-faint); text-transform:uppercase;
+  }
+  nav.links{ display:flex; gap:34px; }
+  nav.links a{
+    text-decoration:none; font-size:0.93rem; color:var(--ink-soft);
+    font-weight:500; position:relative; padding:4px 0;
+  }
+  nav.links a:hover{ color:var(--ink); }
+  .nav-actions{ display:flex; align-items:center; gap:18px; }
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    font-family:"IBM Plex Sans", sans-serif; font-weight:600; font-size:0.9rem;
+    padding:11px 20px; border-radius:999px; border:1px solid transparent;
+    cursor:pointer; text-decoration:none; transition:transform .15s ease, background .15s ease, border-color .15s ease;
+    white-space:nowrap;
+  }
+  .btn:active{ transform:scale(0.97); }
+  .btn-primary{ background:var(--accent); color:#F4FBF8; }
+  .btn-primary:hover{ background:var(--accent-strong); }
+  .btn-ghost{ background:transparent; color:var(--ink); border-color:var(--line-strong); }
+  .btn-ghost:hover{ border-color:var(--accent); color:var(--accent); }
+  .menu-toggle{ display:none; }
+
+  @media (max-width:860px){
+    nav.links{ display:none; }
+    .nav-actions .btn-ghost{ display:none; }
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    padding:76px 0 64px;
+    overflow:hidden;
+    border-bottom:1px solid var(--line);
+  }
+  .hero-grid{
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px; align-items:center;
+  }
+  @media (max-width:900px){ .hero-grid{ grid-template-columns:1fr; } }
+  .hero h1{ font-size:clamp(2.3rem, 4.4vw, 3.5rem); margin-top:14px; }
+  .hero .lede{
+    margin-top:20px; font-size:1.08rem; color:var(--ink-soft); max-width:52ch;
+  }
+  .hero-ctas{ display:flex; gap:14px; margin-top:32px; flex-wrap:wrap; }
+
+  .vitals{
+    margin-top:44px;
+    display:grid; grid-template-columns:repeat(3,1fr);
+    border:1px solid var(--line); border-radius:var(--radius-m);
+    background:var(--surface); box-shadow:var(--shadow);
+    overflow:hidden;
+  }
+  .vitals div{
+    padding:16px 18px; border-right:1px solid var(--line);
+  }
+  .vitals div:last-child{ border-right:none; }
+  .vitals .num{ font-family:"IBM Plex Mono", monospace; font-size:1.5rem; font-weight:600; color:var(--accent); }
+  .vitals .lbl{ font-size:0.72rem; color:var(--ink-faint); margin-top:4px; letter-spacing:0.03em; }
+  @media (max-width:520px){ .vitals{ grid-template-columns:1fr; } .vitals div{ border-right:none; border-bottom:1px solid var(--line);} .vitals div:last-child{border-bottom:none;} }
+
+  .hero-visual{
+    position:relative;
+    border:1px solid var(--line);
+    border-radius:var(--radius-l);
+    background:var(--surface);
+    box-shadow:var(--shadow);
+    padding:26px 22px 22px;
+  }
+  .hero-visual .scope-label{
+    display:flex; justify-content:space-between; align-items:baseline;
+    font-family:"IBM Plex Mono", monospace; font-size:0.68rem; color:var(--ink-faint);
+    letter-spacing:0.06em; margin-bottom:10px;
+  }
+  .hero-visual .scope-label b{ color:var(--accent); font-weight:600; }
+  .waveform{ width:100%; height:auto; display:block; }
+  .wave-path{
+    fill:none; stroke:var(--accent); stroke-width:2; stroke-linecap:round; stroke-linejoin:round;
+    stroke-dasharray:900; stroke-dashoffset:900;
+    animation:draw 2.6s ease-out forwards .2s;
+  }
+  .wave-grid line{ stroke:var(--line); stroke-width:1; }
+  @keyframes draw{ to{ stroke-dashoffset:0; } }
+  @media (prefers-reduced-motion: reduce){
+    .wave-path{ animation:none; stroke-dashoffset:0; }
+  }
+  .hero-visual .readout{
+    display:flex; justify-content:space-between; margin-top:14px;
+    padding-top:14px; border-top:1px dashed var(--line);
+    font-family:"IBM Plex Mono", monospace; font-size:0.78rem; color:var(--ink-soft);
+  }
+  .readout .ok{ color:var(--accent); font-weight:600; }
+
+  /* ---------- section shell ---------- */
+  section{ padding:88px 0; }
+  section.tight{ padding:72px 0; }
+  .section-head{ max-width:640px; margin-bottom:48px; }
+  .section-head h2{ font-size:clamp(1.7rem, 3vw, 2.3rem); margin-top:12px; }
+  .section-head .lede{ margin-top:14px; color:var(--ink-soft); font-size:1.02rem; }
+  .alt-bg{ background:var(--surface-alt); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+
+  /* ---------- about ---------- */
+  .about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start; }
+  @media (max-width:880px){ .about-grid{ grid-template-columns:1fr; gap:40px; } }
+  .about-grid p + p{ margin-top:16px; }
+  .about-grid .lede{ color:var(--ink-soft); font-size:1.03rem; }
+  .acronym{
+    display:inline-flex; gap:2px; margin-top:22px; flex-wrap:wrap;
+  }
+  .acronym span{
+    font-family:"IBM Plex Mono", monospace; font-size:0.74rem; color:var(--ink-faint);
+    border:1px solid var(--line-strong); border-radius:6px; padding:6px 9px; background:var(--surface);
+  }
+  .acronym span b{ color:var(--accent); font-weight:600; }
+
+  .feature-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:0; border-top:1px solid var(--line); }
+  .feature-list li{
+    display:flex; gap:16px; padding:18px 0; border-bottom:1px solid var(--line);
+  }
+  .feature-list .ico{ flex:none; width:22px; height:22px; color:var(--accent); margin-top:2px; }
+  .feature-list strong{ display:block; font-size:0.98rem; margin-bottom:3px; }
+  .feature-list span{ color:var(--ink-soft); font-size:0.91rem; }
+
+  /* ---------- services ---------- */
+  .svc-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--radius-m); overflow:hidden; }
+  @media (max-width:920px){ .svc-grid{ grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:560px){ .svc-grid{ grid-template-columns:1fr;} }
+  .svc-card{ background:var(--surface); padding:28px 24px; display:flex; flex-direction:column; gap:14px; }
+  .svc-card .ico{ width:30px; height:30px; color:var(--accent); }
+  .svc-card h3{ font-size:1.08rem; font-weight:600; }
+  .svc-card p{ color:var(--ink-soft); font-size:0.9rem; }
+  .svc-card .tag{
+    margin-top:auto; font-family:"IBM Plex Mono", monospace; font-size:0.66rem;
+    letter-spacing:0.06em; color:var(--gold); text-transform:uppercase;
+  }
+
+  /* ---------- facilities / blueprint ---------- */
+  .fac-grid{ display:grid; grid-template-columns:0.95fr 1.05fr; gap:60px; align-items:center; }
+  @media (max-width:920px){ .fac-grid{ grid-template-columns:1fr; gap:44px; } }
+  .blueprint{
+    border:1px solid var(--line-strong); border-radius:var(--radius-m);
+    background:var(--surface); padding:18px; box-shadow:var(--shadow);
+  }
+  .blueprint svg{ width:100%; height:auto; }
+  .blueprint-cap{
+    display:flex; justify-content:space-between; margin-top:12px;
+    font-family:"IBM Plex Mono", monospace; font-size:0.68rem; color:var(--ink-faint); letter-spacing:0.04em;
+  }
+  .zone-rect{ fill:var(--accent-tint); stroke:var(--accent); stroke-width:1.4; }
+  .zone-rect.alt{ fill:var(--gold-tint); stroke:var(--gold); }
+  .zone-label{ font-family:"IBM Plex Mono", monospace; font-size:9.5px; fill:var(--ink-soft); }
+  .zone-dim{ font-family:"IBM Plex Mono", monospace; font-size:8px; fill:var(--ink-faint); }
+  .grid-line{ stroke:var(--line); stroke-width:0.6; }
+
+  .fac-list{ list-style:none; margin:0; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:22px 28px; }
+  @media (max-width:520px){ .fac-list{ grid-template-columns:1fr; } }
+  .fac-list li{ display:flex; gap:12px; }
+  .fac-list .dot{ flex:none; width:8px; height:8px; border-radius:50%; background:var(--accent); margin-top:8px; }
+  .fac-list strong{ display:block; font-size:0.96rem; }
+  .fac-list span{ color:var(--ink-soft); font-size:0.88rem; }
+
+  /* ---------- contact ---------- */
+  .contact-grid{ display:grid; grid-template-columns:0.85fr 1.15fr; gap:56px; }
+  @media (max-width:920px){ .contact-grid{ grid-template-columns:1fr; gap:40px; } }
+  .info-card{
+    border:1px solid var(--line); border-radius:var(--radius-m); background:var(--surface);
+    padding:28px; box-shadow:var(--shadow);
+  }
+  .info-row{ display:flex; gap:14px; padding:16px 0; border-bottom:1px solid var(--line); }
+  .info-row:last-child{ border-bottom:none; }
+  .info-row .ico{ flex:none; width:20px; height:20px; color:var(--accent); margin-top:2px; }
+  .info-row strong{ display:block; font-size:0.92rem; }
+  .info-row span{ color:var(--ink-soft); font-size:0.88rem; }
+  .info-row a{ text-decoration:none; }
+  .info-row a:hover{ color:var(--accent); }
+
+  form{ display:flex; flex-direction:column; gap:16px; }
+  .form-row{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media (max-width:560px){ .form-row{ grid-template-columns:1fr; } }
+  label{ display:flex; flex-direction:column; gap:7px; font-size:0.84rem; font-weight:500; color:var(--ink-soft); }
+  input, select, textarea{
+    font-family:"IBM Plex Sans", sans-serif; font-size:0.95rem; color:var(--ink);
+    background:var(--surface); border:1px solid var(--line-strong); border-radius:var(--radius-s);
+    padding:11px 13px; width:100%;
+  }
+  textarea{ resize:vertical; min-height:110px; }
+  input:focus, select:focus, textarea:focus{ border-color:var(--accent); }
+  .form-note{ font-size:0.78rem; color:var(--ink-faint); }
+  .form-status{
+    display:none; align-items:center; gap:10px; padding:14px 16px; border-radius:var(--radius-s);
+    background:var(--accent-tint); border:1px solid var(--accent); color:var(--accent-strong); font-size:0.88rem;
+  }
+  .form-status.show{ display:flex; }
+  .form-status svg{ width:18px; height:18px; flex:none; }
+
+  /* ---------- footer ---------- */
+  footer{ border-top:1px solid var(--line); padding:48px 0 30px; }
+  .foot-grid{ display:flex; justify-content:space-between; gap:32px; flex-wrap:wrap; align-items:flex-start; }
+  .foot-brand .brand-text strong{ font-size:1.1rem; }
+  .foot-brand p{ margin-top:12px; color:var(--ink-soft); font-size:0.85rem; max-width:34ch; }
+  .foot-links{ display:flex; gap:56px; flex-wrap:wrap; }
+  .foot-col h4{ font-family:"IBM Plex Mono", monospace; font-size:0.68rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint); font-weight:500; margin-bottom:14px; }
+  .foot-col a{ display:block; text-decoration:none; color:var(--ink-soft); font-size:0.88rem; padding:5px 0; }
+  .foot-col a:hover{ color:var(--accent); }
+  .foot-bottom{
+    margin-top:44px; padding-top:22px; border-top:1px solid var(--line);
+    display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
+    font-size:0.78rem; color:var(--ink-faint);
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="SAER, inicio">
+      <svg class="brand-mark" viewBox="0 0 34 34" fill="none" aria-hidden="true">
+        <circle cx="17" cy="17" r="15.5" stroke="currentColor" stroke-width="1.4"/>
+        <path d="M6 18 L11 18 L13 12 L16.5 24 L19.5 9 L22 18 L28 18" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="brand-text">
+        <strong>SAER</strong>
+        <span>El Rosal · Caracas</span>
+      </span>
+    </a>
+    <nav class="links" aria-label="Navegación principal">
+      <a href="#nosotros">Nosotros</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#instalaciones">Instalaciones</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn-ghost" href="tel:+582127139284">(0212) 713.9284</a>
+      <a class="btn btn-primary" href="#contacto">Agendar consulta</a>
+    </div>
+  </div>
+</header>
+
+<main id="contenido">
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">Centro médico-quirúrgico · El Rosal, Caracas</span>
+        <h1>Servicio de Anestesia El Rosal</h1>
+        <p class="lede">SAER acompaña procedimientos de cirugía plástica y oftalmológica con un equipo de anestesiología dedicado, en instalaciones propias de 400&nbsp;m² pensadas para la seguridad y la recuperación del paciente.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="#contacto">Agendar consulta</a>
+          <a class="btn btn-ghost" href="#instalaciones">Conocer las instalaciones</a>
+        </div>
+
+        <div class="vitals">
+          <div>
+            <div class="num">400 m²</div>
+            <div class="lbl">Instalaciones propias</div>
+          </div>
+          <div>
+            <div class="num">2</div>
+            <div class="lbl">Líneas quirúrgicas: plástica y oftalmológica</div>
+          </div>
+          <div>
+            <div class="num">1</div>
+            <div class="lbl">Equipo de anestesiología dedicado</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="scope-label">
+          <span>MONITOR · TRAZADO CONTINUO</span>
+          <span><b>NORMAL</b> · SpO₂ 98%</span>
+        </div>
+        <svg class="waveform" viewBox="0 0 460 150" preserveAspectRatio="none">
+          <g class="wave-grid">
+            <line x1="0" y1="25" x2="460" y2="25"/>
+            <line x1="0" y1="50" x2="460" y2="50"/>
+            <line x1="0" y1="75" x2="460" y2="75"/>
+            <line x1="0" y1="100" x2="460" y2="100"/>
+            <line x1="0" y1="125" x2="460" y2="125"/>
+            <line x1="40" y1="0" x2="40" y2="150"/>
+            <line x1="120" y1="0" x2="120" y2="150"/>
+            <line x1="200" y1="0" x2="200" y2="150"/>
+            <line x1="280" y1="0" x2="280" y2="150"/>
+            <line x1="360" y1="0" x2="360" y2="150"/>
+            <line x1="440" y1="0" x2="440" y2="150"/>
+          </g>
+          <path class="wave-path" d="M0,75 L30,75 L42,75 L52,30 L60,120 L68,55 L78,75 L140,75 L152,75 L162,32 L170,118 L178,58 L188,75 L250,75 L262,75 L272,30 L280,120 L288,55 L298,75 L360,75 L372,75 L382,32 L390,118 L398,58 L408,75 L460,75"/>
+        </svg>
+        <div class="readout">
+          <span>FC <b class="ok mono">72</b> bpm</span>
+          <span>TA <b class="ok mono">118/76</b></span>
+          <span>Estado&nbsp;<span class="ok">estable</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="nosotros">
+    <div class="wrap about-grid">
+      <div>
+        <span class="eyebrow">Quiénes somos</span>
+        <h2 style="margin-top:12px;">Anestesia como base de una cirugía segura</h2>
+        <p class="lede" style="margin-top:18px;">SAER — Servicio de Anestesia El Rosal — es un centro médico ubicado en la urbanización El Rosal, en el municipio Chacao de Caracas. Nace para dar soporte anestésico especializado a dos disciplinas quirúrgicas que exigen precisión: la cirugía plástica y estética, y la cirugía oftalmológica.</p>
+        <p style="margin-top:16px; color:var(--ink-soft); font-size:1.03rem;">Ocupa unas instalaciones propias de aproximadamente 400&nbsp;m², diseñadas para que el paciente recorra un mismo espacio desde la valoración preoperatoria hasta la recuperación, bajo monitoreo continuo del equipo de anestesiología.</p>
+        <div class="acronym">
+          <span><b>S</b>ervicio</span>
+          <span><b>A</b>nestesia</span>
+          <span><b>E</b>l</span>
+          <span><b>R</b>osal</span>
+        </div>
+      </div>
+
+      <ul class="feature-list">
+        <li>
+          <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v6M12 21v-4M4.2 7l4.3 3M19.8 7l-4.3 3M4.2 17l4.3-3M19.8 17l-4.3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.6"/></svg>
+          <div>
+            <strong>Equipo de anestesiología dedicado</strong>
+            <span>Valoración preoperatoria, plan anestésico individual y monitoreo continuo durante todo el procedimiento.</span>
+          </div>
+        </li>
+        <li>
+          <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="4" width="17" height="16" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M8 2.5v3M16 2.5v3M3.5 10h17" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <div>
+            <strong>Agenda quirúrgica coordinada</strong>
+            <span>Procedimientos de cirugía plástica y oftalmológica programados en quirófanos propios del centro.</span>
+          </div>
+        </li>
+        <li>
+          <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12a8 8 0 1 1 8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M4 12v-4M4 12h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div>
+            <strong>Recuperación acompañada</strong>
+            <span>Áreas dedicadas al postoperatorio inmediato, con seguimiento hasta el alta del paciente.</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="servicios" class="alt-bg">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Servicios</span>
+        <h2>Dos especialidades, un mismo estándar anestésico</h2>
+        <p class="lede">Cada procedimiento se apoya en el mismo protocolo de seguridad: valoración previa, anestesia controlada y recuperación supervisada.</p>
+      </div>
+
+      <div class="svc-grid">
+        <div class="svc-card">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 3c0 3-2 4-4 6s-3 5-1 8 6 3 8 1 3-5 1-8-4-3-4-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="17.5" cy="6.5" r="2.2" stroke="currentColor" stroke-width="1.5"/></svg>
+          <h3>Cirugía plástica y estética</h3>
+          <p>Procedimientos reconstructivos y estéticos con planificación anestésica personalizada según el tipo y duración de la cirugía.</p>
+          <span class="tag">Línea quirúrgica</span>
+        </div>
+        <div class="svc-card">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/></svg>
+          <h3>Cirugía oftalmológica</h3>
+          <p>Soporte anestésico para procedimientos oculares que requieren precisión milimétrica y estabilidad total del paciente.</p>
+          <span class="tag">Línea quirúrgica</span>
+        </div>
+        <div class="svc-card">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 13h3l2-5 3 9 2-7 2 3h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="19" cy="13" r="1.2" fill="currentColor"/></svg>
+          <h3>Servicio de anestesiología</h3>
+          <p>Evaluación preanestésica, anestesia general, regional o sedación, y monitoreo continuo de signos vitales.</p>
+          <span class="tag">Núcleo del servicio</span>
+        </div>
+        <div class="svc-card">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="8" width="16" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M8 8V6a4 4 0 0 1 8 0v2" stroke="currentColor" stroke-width="1.5"/></svg>
+          <h3>Recuperación postoperatoria</h3>
+          <p>Salas de recuperación con vigilancia hasta el egreso, y pautas claras de cuidado para el paciente y su acompañante.</p>
+          <span class="tag">Post-operatorio</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FACILITIES -->
+  <section id="instalaciones">
+    <div class="wrap fac-grid">
+      <div class="blueprint">
+        <svg viewBox="0 0 400 320" role="img" aria-label="Esquema de las instalaciones de 400 metros cuadrados">
+          <g class="grid-line">
+            <line x1="0" y1="40" x2="400" y2="40"/><line x1="0" y1="80" x2="400" y2="80"/>
+            <line x1="0" y1="120" x2="400" y2="120"/><line x1="0" y1="160" x2="400" y2="160"/>
+            <line x1="0" y1="200" x2="400" y2="200"/><line x1="0" y1="240" x2="400" y2="240"/>
+            <line x1="0" y1="280" x2="400" y2="280"/>
+            <line x1="40" y1="0" x2="40" y2="320"/><line x1="80" y1="0" x2="80" y2="320"/>
+            <line x1="120" y1="0" x2="120" y2="320"/><line x1="160" y1="0" x2="160" y2="320"/>
+            <line x1="200" y1="0" x2="200" y2="320"/><line x1="240" y1="0" x2="240" y2="320"/>
+            <line x1="280" y1="0" x2="280" y2="320"/><line x1="320" y1="0" x2="320" y2="320"/>
+            <line x1="360" y1="0" x2="360" y2="320"/>
+          </g>
+
+          <rect class="zone-rect" x="16" y="16" width="170" height="110"/>
+          <text class="zone-label" x="26" y="40">RECEPCIÓN</text>
+          <text class="zone-label" x="26" y="54">Y ADMISIÓN</text>
+          <text class="zone-dim" x="26" y="112">≈ 60 m²</text>
+
+          <rect class="zone-rect alt" x="200" y="16" width="184" height="70"/>
+          <text class="zone-label" x="210" y="40">CONSULTORIOS</text>
+          <text class="zone-dim" x="210" y="72">≈ 45 m²</text>
+
+          <rect class="zone-rect" x="200" y="100" width="90" height="86"/>
+          <text class="zone-label" x="208" y="122">QUIRÓFANO</text>
+          <text class="zone-label" x="208" y="136">1</text>
+          <text class="zone-dim" x="208" y="172">≈ 38 m²</text>
+
+          <rect class="zone-rect" x="294" y="100" width="90" height="86"/>
+          <text class="zone-label" x="302" y="122">QUIRÓFANO</text>
+          <text class="zone-label" x="302" y="136">2</text>
+          <text class="zone-dim" x="302" y="172">≈ 38 m²</text>
+
+          <rect class="zone-rect alt" x="16" y="140" width="170" height="80"/>
+          <text class="zone-label" x="26" y="163">ESTERILIZACIÓN</text>
+          <text class="zone-label" x="26" y="177">Y APOYO</text>
+          <text class="zone-dim" x="26" y="212">≈ 34 m²</text>
+
+          <rect class="zone-rect" x="16" y="234" width="368" height="70"/>
+          <text class="zone-label" x="26" y="258">RECUPERACIÓN Y ÁREA DE ESTAR PARA ACOMPAÑANTES</text>
+          <text class="zone-dim" x="26" y="290">≈ 185 m²</text>
+        </svg>
+        <div class="blueprint-cap">
+          <span>ESQUEMA REFERENCIAL</span>
+          <span>ÁREA TOTAL ≈ 400 M²</span>
+        </div>
+      </div>
+
+      <div>
+        <span class="eyebrow">Instalaciones</span>
+        <h2 style="margin-top:12px;">400 m² pensados para el flujo del paciente</h2>
+        <p class="lede" style="margin-top:14px; margin-bottom:32px;">Un mismo recorrido, de la admisión a la salida, con áreas separadas para cada etapa del procedimiento.</p>
+
+        <ul class="fac-list">
+          <li><span class="dot"></span><div><strong>2 quirófanos equipados</strong><span>Para procedimientos de cirugía plástica y oftalmológica.</span></div></li>
+          <li><span class="dot"></span><div><strong>Área de esterilización</strong><span>Control de bioseguridad e insumos quirúrgicos.</span></div></li>
+          <li><span class="dot"></span><div><strong>Consultorios de valoración</strong><span>Evaluación preoperatoria y preanestésica.</span></div></li>
+          <li><span class="dot"></span><div><strong>Salas de recuperación</strong><span>Monitoreo postoperatorio hasta el alta.</span></div></li>
+          <li><span class="dot"></span><div><strong>Recepción y admisión</strong><span>Ingreso y trámites administrativos del paciente.</span></div></li>
+          <li><span class="dot"></span><div><strong>Área de estar</strong><span>Espacio de espera para familiares y acompañantes.</span></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contacto" class="alt-bg">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Contacto</span>
+        <h2>Agenda tu valoración</h2>
+        <p class="lede">Escríbenos con los datos del procedimiento y el equipo de SAER se pondrá en contacto para coordinar la valoración preanestésica.</p>
+      </div>
+
+      <div class="contact-grid">
+        <div class="info-card">
+          <div class="info-row">
+            <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21Z" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="9.5" r="2.4" stroke="currentColor" stroke-width="1.5"/></svg>
+            <div><strong>Dirección</strong><span>Urbanización El Rosal, Municipio Chacao, Caracas, Venezuela</span></div>
+          </div>
+          <div class="info-row">
+            <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 5h4l2 5-2.5 1.5a11 11 0 0 0 5 5L14 14l5 2v4c0 1-1 1.5-2 1.3C9.5 20 4 14.5 3.7 7c-.1-1 .4-2 1.3-2Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            <div><strong>Teléfono</strong><span><a href="tel:+582127139284">(0212) 713.9284</a></span></div>
+          </div>
+          <div class="info-row">
+            <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div><strong>Correo</strong><span><a href="mailto:contacto@saerelrosal.com">contacto@saerelrosal.com</a></span></div>
+          </div>
+          <div class="info-row">
+            <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.5"/><path d="M12 7v5l3.5 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <div><strong>Horario de atención</strong><span class="mono">Lun – Vie · 08:00 – 17:00</span></div>
+          </div>
+        </div>
+
+        <form id="contact-form" novalidate>
+          <div class="form-row">
+            <label>Nombre completo
+              <input type="text" name="nombre" required autocomplete="name">
+            </label>
+            <label>Teléfono
+              <input type="tel" name="telefono" required autocomplete="tel">
+            </label>
+          </div>
+          <div class="form-row">
+            <label>Correo electrónico
+              <input type="email" name="correo" required autocomplete="email">
+            </label>
+            <label>Procedimiento de interés
+              <select name="procedimiento" required>
+                <option value="">Selecciona una opción</option>
+                <option>Cirugía plástica y estética</option>
+                <option>Cirugía oftalmológica</option>
+                <option>Consulta de anestesiología</option>
+                <option>Otro</option>
+              </select>
+            </label>
+          </div>
+          <label>Mensaje
+            <textarea name="mensaje" placeholder="Cuéntanos brevemente el procedimiento y la fecha que tienes en mente."></textarea>
+          </label>
+          <p class="form-note">Este formulario es una demostración: no envía datos a ningún servidor.</p>
+          <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+            <button type="submit" class="btn btn-primary">Enviar solicitud</button>
+            <div class="form-status" id="form-status">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.5"/><path d="M8 12.5l2.5 2.5L16 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>Solicitud registrada. Te contactaremos a la brevedad.</span>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="#top">
+          <svg class="brand-mark" viewBox="0 0 34 34" fill="none" aria-hidden="true">
+            <circle cx="17" cy="17" r="15.5" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M6 18 L11 18 L13 12 L16.5 24 L19.5 9 L22 18 L28 18" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="brand-text"><strong>SAER</strong><span>El Rosal · Caracas</span></span>
+        </a>
+        <p>Servicio de Anestesia El Rosal — soporte anestésico para cirugía plástica y oftalmológica.</p>
+      </div>
+      <div class="foot-links">
+        <div class="foot-col">
+          <h4>Sitio</h4>
+          <a href="#nosotros">Nosotros</a>
+          <a href="#servicios">Servicios</a>
+          <a href="#instalaciones">Instalaciones</a>
+          <a href="#contacto">Contacto</a>
+        </div>
+        <div class="foot-col">
+          <h4>Contacto</h4>
+          <a href="tel:+582127139284">(0212) 713.9284</a>
+          <a href="mailto:contacto@saerelrosal.com">contacto@saerelrosal.com</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 SAER · Servicio de Anestesia El Rosal.</span>
+      <span>Página de demostración — contenido de referencia.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var form = document.getElementById('contact-form');
+    var status = document.getElementById('form-status');
+    if(!form) return;
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      if(!form.checkValidity()){
+        form.reportValidity();
+        return;
+      }
+      status.classList.add('show');
+      form.reset();
+    });
+  })();
+</script>
+
+</body>
+</html>
